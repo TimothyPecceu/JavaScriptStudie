@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>JS PF project: het Document Object Model</title>
+<style type="text/css" media="all">
+body{
+	font-family:Verdana, Geneva, sans-serif;
+	color:#333;
+	}
+img{
+	float:right;
+	}
+</style>
+<script type="text/javascript">
+    window.onload = function(){
+        /* wijzig de titel */
+        var eTitel = document.getElementById('kop'); //referentie naar node
+        eTitel.innerHTML = "De document tree";
+        
+        /* wijzig de tekst van het tweede list item */
+        var eBolletjes = document.getElementsByTagName('li');
+        var nAantal = eBolletjes.length;
+        var e2deItem = eBolletjes[1]; //tweede item;
+        e2deItem.removeChild(e2deItem.childNodes[0]);
+        var sTekst = document.createTextNode('C#');
+        e2deItem.appendChild(sTekst);
+        
+        /* een nieuw item invoegen achteraan de lijst */
+        var eLijst = document.getElementsByTagName('ul')[0];
+        var eItem = document.createElement('li');
+        var sTekst = document.createTextNode('Perl');
+        eItem.appendChild(sTekst);
+        eLijst.appendChild(eItem);
+        
+        /* attributen zetten en wijzigen */
+        var eImg = document.getElementsByTagName("img")[0];
+        eImg.src = "../images/elise.jpg";
+        var sTooltip = "Elise, system engineer";
+        eImg.setAttribute("alt", sTooltip);
+        eImg.setAttribute("title", sTooltip);
+        
+        /* opdracht 1 */
+        var eKoffie = document.getElementsByTagName('p')[0];
+        eKoffie.innerHTML += " en <em>chocolade</em>";
+        
+        /* opdracht 2 */
+        var eContainer = document.getElementById('container');
+        var eFooter = document.createElement('div');
+        var eTekst1 = document.createTextNode("\< je vind een job op de ");
+        var eTekst2 = document.createTextNode("vdab")
+        var eTekst3 = document.createTextNode(" website \>");
+        var eLink = document.createElement("a");
+        eLink.href = "http://www.vdab.be";
+        eLink.appendChild(eTekst2);
+        eFooter.id = 'footer';
+        eFooter.appendChild(eTekst1);
+        eFooter.appendChild(eLink);
+        eFooter.appendChild(eTekst3);
+        eContainer.appendChild(eFooter);
+        
+        /* opdracht 3 */
+        var ePLink = document.querySelector('p a');
+        ePLink.href = "https://www.google.be/search?hl=en&site=imghp&tbm=isch&source=hp&biw=1280&bih=939&q=science-fiction&oq=science-fi&gs_l=img.3.0.0j0i30l9.1798.7698.0.8514.16.11.3.2.3.0.75.653.11.11.0....0...1ac.1.64.img..0.16.671.axvXPwNbrHg";
+        ePLink.target = '_blank';
+        
+        /* opdracht 4 
+         * 
+         * de breedte van div#container is 1264px
+         * 
+         * */
+        
+    }
+</script>
+</head>
+<body>
+<div id="container">
+  <h1 id="kop">Het Document Object Model</h1>
+  <!-- dit is HTML commentaar onzichtbaar in het beeld-->
+  <p><img src="../images/linda.jpg" alt="Linda, een front-end programmeur" />De meeste programmeurs <em>leven</em> op koffie</p>
+  <p>Veel programmeurs zijn liefhebbers van <a href="http://en.wikipedia.org/wiki/Science-fiction">science-fiction</a></p>
+  <div class="menu">
+    <h2>Onze programmeertalen</h2>
+    <ul>
+      <li>Javascript</li>
+      <li>PHP</li>
+      <li>ASP.Net</li>
+      <li>Java</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
