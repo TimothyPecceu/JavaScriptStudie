@@ -5,6 +5,9 @@
 <title>JS PF taak: TagCloud</title>
 <style media="screen" type="text/css">
 <!--
+body{
+    font-family: sans-serif;
+}
 em {
 	font-style:normal;
 	font-weight:bold;
@@ -48,6 +51,42 @@ var arrTags = [
 				["MySQL", 155, 122]
 			   ]
 
+window.onload = function(){
+    var eContainer = document.getElementById("tagContainer");
+    
+    for(var i=0; i < arrTags.length; i++){
+        var eTag = document.createElement("span");
+        eTag.innerHTML = arrTags[i][0];
+        eTag.className = "tag";
+        eTag.style.fontSize = fnTekstGrootte(arrTags[i]);
+        eTag.style.display = "inline";
+        eTag.style.top = Math.round(Math.random()* 400) + "px";
+        eTag.style.left = Math.round(Math.random()* 500) + "px";
+        if(arrTags[i][1]>arrTags[i][2]){
+            eTag.style.color = "green";
+        }else{
+            eTag.style.color = "red";
+        }
+        eContainer.appendChild(eTag);
+    }
+};
+
+function fnTekstGrootte(a){
+    /*
+     * returnt een string met de tektsgroote
+     * @a Array met tekst en aantal stemmen;
+     */
+    
+    var sGrootte = "";
+    var nProcent = a[1]/4;
+    
+    if(nProcent < 75){
+        nProcent = 75;
+    }
+    
+    sGrootte += nProcent+"%";
+    return sGrootte;
+}
 </script>
 </head>
 <body>
