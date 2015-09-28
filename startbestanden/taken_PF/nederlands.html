@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>nederlands</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            window.onload = function(){
+                if(localStorage){
+                    localStorage.setItem('taal', 'nederlands');
+                }
+                
+                var eTerug = document.getElementById('terug');
+                eTerug.addEventListener('click', function(){
+                   localStorage.clear(); 
+                });
+                
+            };
+        </script>
+    </head>
+    <body>
+        <nav>
+            <a id='terug' href='JS_taak_taalkeuze.html'>home</a>
+        </nav>
+        <h1>In het nederlands</h1>
+    </body>
+</html>

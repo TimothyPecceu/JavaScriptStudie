@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JS PF taak: taalkeuze</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            window.onload = function(){
+                if(localStorage){
+                    if(localStorage.taal){
+                        var sTaal = localStorage.taal;
+                        switch(sTaal){
+                            case 'nederlands':
+                                window.location.href = "nederlands.html";
+                                break;
+                            case 'français':
+                                window.location.href = "francais.html";
+                                break;
+                            case 'english':
+                                window.location.href = "english.html";
+                                break;
+                        }
+                    }
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div class="talen">
+            <ul>
+                <li><a href="nederlands.html"><img src="../images/be.png" alt="nederlands"> Nederlands</a></li>
+                <li><a href="francais.html"><img src="../images/fr.png" alt="français"> Français</a></li>
+                <li><a href="english.html"><img src="../images/gb.png" alt="english"> English</a></li>
+            </ul>
+        </div>
+    </body>
+</html>

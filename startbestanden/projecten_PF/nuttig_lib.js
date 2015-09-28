@@ -99,6 +99,7 @@ function getCookie(naam){
             return document.cookie.substring(begin, einde);
         }
     }
+    return null;
 }
 //------------------------------------------------------------------------------
 function clearCookie(naam){
