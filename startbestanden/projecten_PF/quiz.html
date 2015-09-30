@@ -13,7 +13,7 @@
                 position:relative;
             }
             .vraag {
-                position:relative;
+                position:absolute;
                 top:30px;
                 left:0;
                 background-color:#EBE54D;
@@ -113,22 +113,30 @@
 
                 // de Vragen
                 for (var i = 0; i < nVragen; i++) {
+
                     //DIV als container vr elke vraag
                     var oVraag = aVragen[i];
                     var eVraagContainer = document.createElement('div');
                     eVraagContainer.setAttribute("class", "vraag");
                     eVraagContainer.setAttribute("data-index", i);
                     eVraagContainer.id = "vraag_" + i;
+
+                    if (i === 0) {
+                        eVraagContainer.style.zIndex = 10;
+                    }
+
                     var eVraag = document.createElement('p');
                     var sVraag = document.createTextNode(oVraag.vraag);
                     eVraag.appendChild(sVraag);
                     eVraagContainer.appendChild(eVraag);
+
                     //eventuele images
                     if (oVraag.media) {
                         var eImage = document.createElement('img');
                         eImage.src = "../images/" + oVraag.media;
                         eVraagContainer.appendChild(eImage);
                     }
+
                     //Antwoorden
                     var eAntwoordenLijst = document.createElement('ul');
                     var aAntwoorden = oVraag.antwoorden;
@@ -149,6 +157,10 @@
                         eAntwoordenLijst.appendChild(eAntwoord);
                     }
                     eVraagContainer.appendChild(eAntwoordenLijst);
+
+                    //NAVBALK MET VORIGE VOLGENDE
+                    eVraagContainer.appendChild(maakNav(i));
+
                     //Feedback
                     var eFeedback = document.createElement('p');
                     eFeedback.setAttribute("class", "feedback");
@@ -156,6 +168,7 @@
                     eVraagContainer.appendChild(eFeedback);
                     dfQuiz.appendChild(eVraagContainer);
                 } //einde lus Vragen
+
                 //extra container eindscore
                 var eScoreContainer = document.createElement('div');
                 eScoreContainer.setAttribute("class", "vraag");
@@ -192,27 +205,83 @@
                     eFeedback.innerHTML = "<span class='correct'>" + sResultaat + "</span><br>" + eFeedback.innerHTML;
                 }
                 eFeedback.style.display = "block";
-                
+
                 eindScore();
             }
 
             function eindScore() {
-            //update de tekst met eindscore in eindscorecontainer
-            //@ oQuiz global
+                //update de tekst met eindscore in eindscorecontainer
+                //@ oQuiz global
+
                 var nVragen = oQuiz.vragen.length;
                 var nBeantwoord = 0;
                 var nJuist = 0;
                 var eScore = document.querySelector("#score");
                 for (var i = 0; i < oQuiz.score.length; i++) {
-                    if (typeof (oQuiz.score[i]) != "undefined") {
-                        ++nBeantwoord
+                    if (typeof (oQuiz.score[i]) !== "undefined") {
+                        ++nBeantwoord;
                     }
                     if (oQuiz.score[i] === true) {
-                        ++nJuist
+                        ++nJuist;
                     }
                 }
                 var sScore = "<p class='score'>Uw score is " + nJuist + "/" + nVragen + " <br>(" + nBeantwoord + " beantwoord)</p>";
                 eScore.innerHTML = sScore;
+            }
+
+            function maakNav(index) {
+                /*
+                 * returnt navbalkje met vorige volgende hyperlinks
+                 * @index:  de index van deze vraag
+                 */
+
+                var nMaxIndex = oQuiz.vragen.length;
+                var nVorigeIndex = index - 1;
+                var nVolgendeIndex = index + 1;
+
+                var eNav = document.createElement('div');
+                eNav.setAttribute('class', 'nav');
+
+                //eerste vraag geen vorige hyperlink
+                if (index > 0) {
+                    var eVorige = document.createElement('a');
+                    eVorige.setAttribute('href', '#');
+                    eVorige.setAttribute('title', 'Vorige vraag: ' + nVorigeIndex);
+                    eVorige.innerHTML = '&lt;&lt;';
+                    eVorige.addEventListener('click', function (e) {
+                        toonVraag(nVorigeIndex);
+                    });
+                    eNav.appendChild(eVorige);
+                }
+                if (index <= nMaxIndex) {
+                    var eVolgende = document.createElement('a');
+                    eVolgende.setAttribute('href', '#');
+                    eVolgende.setAttribute('title', 'Volgende vraag: ' + nVolgendeIndex);
+                    eVolgende.innerHTML = '&gt;&gt;';
+                    eVolgende.addEventListener('click', function (e) {
+                        toonVraag(nVolgendeIndex);
+                    });
+                    eNav.appendChild(eVolgende);
+                }
+
+                return eNav;
+            }
+
+            function toonVraag(index) {
+                /*
+                 * toont een vraag door de z-index hoog te zetten
+                 * @index: index in de collection 'vraag' elementen (inclusief de eindscore container)
+                 */
+
+                var eVragen = document.querySelectorAll('.vraag');
+
+                for (var i = 0; i < eVragen.length; i++) {
+                    if (i === index) {
+                        eVragen[i].style.zIndex = 10;
+                    } else {
+                        eVragen[i].style.zIndex = 0;
+                    }
+                }
             }
         </script>
     </head>
